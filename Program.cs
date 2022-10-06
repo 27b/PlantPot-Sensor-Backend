@@ -1,21 +1,17 @@
+using PlantPotServices;
 using PlantPotDTO;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-List<PlantPot> PlantPotList = new List<PlantPot>();
-
 app.MapGet("/status", () => "Online");
 
-app.MapGet("/plant-pot", () => PlantPotList);
+app.MapGet("/plant-pot", () => PlantPotService.RetrieveList());
 
-app.MapPost("/plant-pot", (PlantPot pot) => PlantPotList.Add(pot));
+app.MapGet("/plant-pot/{name}", (string name) => PlantPotService.Retrieve(name));
 
-app.MapGet("/plant-pot/{name}", (string name) => PlantPotList.FirstOrDefault(item => item.name == name));
+app.MapPost("/plant-pot", (PlantPotDto pot) => PlantPotService.Append(pot));
 
-app.MapPut("/plant-pot", (PlantPot pot) => {
-    var result = PlantPotList.FirstOrDefault(item => item.name == pot.name);
-    if (result != null) result.temperature = pot.temperature;
-});
+app.MapPut("/plant-pot", (PlantPotDto pot) => PlantPotService.Update(pot));
 
 app.Run();

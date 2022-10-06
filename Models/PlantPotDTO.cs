@@ -1,10 +1,10 @@
 namespace PlantPotDTO
 {
-    public class PlantPot
+    public class PlantPotDto
     {
         public string name {get; set;}
         public double temperature {get; set;}
-        public PlantPot(string name, double temperature)
+        public PlantPotDto(string name, double temperature)
         {
             this.name = name;
             this.temperature = temperature;
